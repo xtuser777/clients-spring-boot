@@ -1,19 +1,19 @@
 version: "3.7"
 services:
-  clients:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    working_dir: /home/clients/app
-    ports:
-      - 8080:8080
-      - 35729:35729
-      - 5005:5005
-    volumes:
-      - ./:/home/clients/app
-    networks:
-      - dev-network
+#  clients:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    restart: unless-stopped
+#    working_dir: /home/clients/app
+#    ports:
+#      - 8080:8080
+#      - 35729:35729
+#      - 5005:5005
+#    volumes:
+#      - ./:/home/clients/app
+#    networks:
+#      - dev-network
   # ====================================================================================================================
   # POSTGRES SERVER
   # ====================================================================================================================
