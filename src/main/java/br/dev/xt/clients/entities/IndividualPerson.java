@@ -2,6 +2,8 @@ package br.dev.xt.clients.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "individual_person")
 public class IndividualPerson {
@@ -16,11 +18,11 @@ public class IndividualPerson {
     private String document;
 
     @Column(length = 10, columnDefinition = "date")
-    private String birth;
+    private Date birth;
 
     public IndividualPerson() {}
 
-    public IndividualPerson(Integer id, String name, String document, String birth) {
+    public IndividualPerson(Integer id, String name, String document, Date birth) {
         this.id = id;
         this.name = name;
         this.document = document;
@@ -51,11 +53,11 @@ public class IndividualPerson {
         this.document = document;
     }
 
-    public String getBirth() {
+    public Date getBirth() {
         return birth;
     }
 
-    public void setBirth(String birth) {
+    public void setBirth(Date birth) {
         this.birth = birth;
     }
 
