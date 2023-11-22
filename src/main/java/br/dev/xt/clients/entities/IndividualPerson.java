@@ -11,13 +11,13 @@ public class IndividualPerson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 80)
+    @Column(length = 80, nullable = false)
     private String name;
 
-    @Column(length = 14)
+    @Column(length = 14, nullable = false)
     private String document;
 
-    @Column(length = 10, columnDefinition = "date")
+    @Column(columnDefinition = "date", nullable = false)
     private Date birth;
 
     public IndividualPerson() {}
