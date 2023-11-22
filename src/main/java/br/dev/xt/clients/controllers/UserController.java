@@ -2,6 +2,7 @@ package br.dev.xt.clients.controllers;
 
 import br.dev.xt.clients.dto.client.ClientResponseDTO;
 import br.dev.xt.clients.dto.user.UserCreateDTO;
+import br.dev.xt.clients.dto.user.UserDTO;
 import br.dev.xt.clients.dto.user.UserResponseDTO;
 import br.dev.xt.clients.dto.user.UserUpdateDTO;
 import br.dev.xt.clients.entities.User;
@@ -29,12 +30,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/")
-    public List<User> index() {
+    public List<UserDTO> index() {
         return this.userService.read();
     }
 
     @GetMapping(value = "/{id}")
-    public Optional<User> show(@PathVariable Integer id) {
+    public UserDTO show(@PathVariable Integer id) {
         return this.userService.read(id);
     }
 

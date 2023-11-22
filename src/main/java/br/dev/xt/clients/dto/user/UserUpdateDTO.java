@@ -14,8 +14,8 @@ public class UserUpdateDTO {
     @Length(min = 2, max = 20, message = "Nome de usuário inválido.")
     private String username;
 
-    @NotNull(message = "Nome de usuário inválido.")
-    @Length(min = 2, max = 20, message = "Nome de usuário inválido.")
+    @NotNull(message = "Senha inválida.")
+    @Length(min = 6, max = 10, message = "Senha inválida.")
     private String password;
 
     @NotNull(message = "Nome inválido.")

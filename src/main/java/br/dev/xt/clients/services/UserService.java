@@ -1,6 +1,8 @@
 package br.dev.xt.clients.services;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.dev.xt.clients.dto.user.UserCreateDTO;
+import br.dev.xt.clients.dto.user.UserDTO;
 import br.dev.xt.clients.dto.user.UserResponseDTO;
 import br.dev.xt.clients.dto.user.UserUpdateDTO;
 import br.dev.xt.clients.entities.*;
@@ -16,14 +18,14 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
-    private final ContactRepository contactRepository;
-    private final IndividualPersonRepository individualPersonRepository;
-    private final PersonRepository personRepository;
+    private final IUserRepository userRepository;
+    private final IAddressRepository addressRepository;
+    private final IContactRepository contactRepository;
+    private final IIndividualPersonRepository individualPersonRepository;
+    private final IPersonRepository personRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, AddressRepository addressRepository, ContactRepository contactRepository, IndividualPersonRepository individualPersonRepository, PersonRepository personRepository) {
+    public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IContactRepository contactRepository, IIndividualPersonRepository individualPersonRepository, IPersonRepository personRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.contactRepository = contactRepository;
@@ -43,7 +45,10 @@ public class UserService {
             user.getPerson().setAddress(address);
             Person person = this.personRepository.save(user.getPerson());
             user.setPerson(person);
+            var passwordHash = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
+            user.setPassword(passwordHash);
             User entity = this.userRepository.save(user);
+            entity.setPassword("");
 
             return new UserResponseDTO(true, new ArrayList<>(), entity);
         } catch (Exception e) {
@@ -54,12 +59,26 @@ public class UserService {
         }
     }
 
-    public List<User> read() {
-        return this.userRepository.findAll();
+    public List<UserDTO> read() {
+        try {
+            return this.userRepository.findAll().stream().map(UserDTO::new).toList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
-    public Optional<User> read(Integer id) {
-        return this.userRepository.findById(id);
+    public UserDTO read(Integer id) {
+        try {
+            Optional<User> entity = this.userRepository.findById(id);
+            User user = null;
+            if (entity.isPresent()) user = entity.get();
+            if (user == null) return null;
+            return new UserDTO(user);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Transactional
@@ -70,7 +89,10 @@ public class UserService {
             Contact contact = this.contactRepository.save(user.getPerson().getContact());
             IndividualPerson individualPerson = this.individualPersonRepository.save(user.getPerson().getIndividual());
             Person person = this.personRepository.save(user.getPerson());
+            var passwordHash = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
+            user.setPassword(passwordHash);
             User entity = this.userRepository.save(user);
+            entity.setPassword("");
 
             return new UserResponseDTO(true, new ArrayList<>(), entity);
         } catch (Exception e) {
@@ -96,6 +118,7 @@ public class UserService {
             this.individualPersonRepository.deleteById(user.get().getPerson().getIndividual().getId());
             this.contactRepository.deleteById(user.get().getPerson().getContact().getId());
             this.addressRepository.deleteById(user.get().getPerson().getAddress().getId());
+            user.get().setPassword("");
 
             return new UserResponseDTO(true, new ArrayList<>(), user.get());
         } catch (Exception e) {

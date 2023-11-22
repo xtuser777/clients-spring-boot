@@ -14,21 +14,21 @@ import java.util.Optional;
 @Service
 public class ClientService {
 
-    private final ClientRepository clientRepository;
-    private final AddressRepository addressRepository;
-    private final ContactRepository contactRepository;
-    private final IndividualPersonRepository individualPersonRepository;
-    private final EnterprisePersonRepository enterprisePersonRepository;
-    private final PersonRepository personRepository;
+    private final IClientRepository clientRepository;
+    private final IAddressRepository addressRepository;
+    private final IContactRepository contactRepository;
+    private final IIndividualPersonRepository individualPersonRepository;
+    private final IEnterprisePersonRepository enterprisePersonRepository;
+    private final IPersonRepository personRepository;
 
     @Autowired
     public ClientService(
-        ClientRepository clientRepository,
-        AddressRepository addressRepository,
-        ContactRepository contactRepository,
-        IndividualPersonRepository individualPersonRepository,
-        EnterprisePersonRepository enterprisePersonRepository,
-        PersonRepository personRepository
+        IClientRepository clientRepository,
+        IAddressRepository addressRepository,
+        IContactRepository contactRepository,
+        IIndividualPersonRepository individualPersonRepository,
+        IEnterprisePersonRepository enterprisePersonRepository,
+        IPersonRepository personRepository
     ) {
         this.clientRepository = clientRepository;
         this.addressRepository = addressRepository;
