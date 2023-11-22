@@ -51,9 +51,9 @@ public class ClientService {
             client.getPerson().setAddress(address);
             person = this.personRepository.save(client.getPerson());
             client.setPerson(person);
-            this.clientRepository.save(client);
+            Client entity = this.clientRepository.save(client);
 
-            return new ClientResponseDTO(true, new ArrayList<>(), client);
+            return new ClientResponseDTO(true, new ArrayList<>(), entity);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             List<String> errors = new ArrayList<>();
@@ -75,9 +75,9 @@ public class ClientService {
             client.getPerson().setAddress(address);
             person = this.personRepository.save(client.getPerson());
             client.setPerson(person);
-            this.clientRepository.save(client);
+            Client entity = this.clientRepository.save(client);
 
-            return new ClientResponseDTO(true, new ArrayList<>(), client);
+            return new ClientResponseDTO(true, new ArrayList<>(), entity);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             List<String> errors = new ArrayList<>();
@@ -103,9 +103,9 @@ public class ClientService {
             Contact contact = this.contactRepository.save(c.getPerson().getContact());
             IndividualPerson individualPerson = this.individualPersonRepository.save(c.getPerson().getIndividual());
             Person person = this.personRepository.save(c.getPerson());
-            this.clientRepository.save(c);
+            Client entity = this.clientRepository.save(c);
 
-            return new ClientResponseDTO(true, new ArrayList<>(), c);
+            return new ClientResponseDTO(true, new ArrayList<>(), entity);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             List<String> errors = new ArrayList<>();
@@ -123,9 +123,9 @@ public class ClientService {
             Contact contact = this.contactRepository.save(c.getPerson().getContact());
             EnterprisePerson enterprisePerson = this.enterprisePersonRepository.save(c.getPerson().getEnterprise());
             Person person = this.personRepository.save(c.getPerson());
-            this.clientRepository.save(c);
+            Client entity = this.clientRepository.save(c);
 
-            return new ClientResponseDTO(true, new ArrayList<>(), c);
+            return new ClientResponseDTO(true, new ArrayList<>(), entity);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             List<String> errors = new ArrayList<>();

@@ -64,7 +64,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/individual/{id}")
-    public ResponseEntity<ClientResponseDTO> update(@PathVariable Integer id, @RequestBody ClientUpdateIndividualDTO client) {
+    public ResponseEntity<ClientResponseDTO> update(@PathVariable Integer id, @Valid @RequestBody ClientUpdateIndividualDTO client) {
         ClientResponseDTO dto = this.clientService.update(id, client);
         if (dto.getSuccess())
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
@@ -73,7 +73,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/enterprise/{id}")
-    public ResponseEntity<ClientResponseDTO> update(@PathVariable Integer id, @RequestBody ClientUpdateEnterpriseDTO client) {
+    public ResponseEntity<ClientResponseDTO> update(@PathVariable Integer id, @Valid @RequestBody ClientUpdateEnterpriseDTO client) {
         ClientResponseDTO dto = this.clientService.update(id, client);
         if (dto.getSuccess())
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);

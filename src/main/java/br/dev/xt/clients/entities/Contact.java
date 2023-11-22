@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contact")
+@Table(name = "tb_contact")
 public class Contact {
 
     @Id

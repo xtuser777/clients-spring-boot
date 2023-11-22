@@ -8,28 +8,35 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_client")
-public class Client {
+@Table(name = "tb_user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 10, nullable = false)
+    private String username;
+
+    @Column(length = 250, nullable = false)
+    private String password;
+
     @ManyToOne(targetEntity = Person.class, optional = false)
     private Person person;
 
-    @Column(name = "created_at",updatable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at",updatable = true)
+    @Column(name = "updated_at", updatable = true)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Client() {
-    }
+    public User() {}
 
-    public Client(Integer id, Person person, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(Integer id, String username, String password, Person person, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.username = username;
+        this.password = password;
         this.person = person;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -41,6 +48,22 @@ public class Client {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Person getPerson() {
@@ -71,12 +94,12 @@ public class Client {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return Objects.equals(id, client.id) && Objects.equals(person, client.person) && Objects.equals(createdAt, client.createdAt) && Objects.equals(updatedAt, client.updatedAt);
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(person, user.person) && Objects.equals(createdAt, user.createdAt) && Objects.equals(updatedAt, user.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, person, createdAt, updatedAt);
+        return Objects.hash(id, username, password, person, createdAt, updatedAt);
     }
 }
